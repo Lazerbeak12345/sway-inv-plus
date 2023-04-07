@@ -1,0 +1,3 @@
+[submodule "sway_inv"]
+	path = sway_inv
+	url = https://github.com/Lazerbeak12345/sway-inv.git
