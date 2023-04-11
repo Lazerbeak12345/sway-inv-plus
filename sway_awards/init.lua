@@ -7,7 +7,7 @@ local function generate_award(self, title, description, unlocked, icon, progress
 	end
 	return gui.HBox {
 		padding = .2,
-		bgcolor = unlocked and "#555555" or "#aaaaaa",
+		bgcolor = unlocked and "#005500" or "#aaaaaa",
 		gui.Image{ w = 2, h = 2, texture_name = icon or "awards_unknown.png" },
 		gui.VBox{
 			gui.Label { label = title },
@@ -19,18 +19,18 @@ local function generate_award(self, title, description, unlocked, icon, progress
 					color = "#333333",
 					align_h = "left",
 				},
-				gui.Box{
+				current > 0 and gui.Box{
 					w = (current * self.bar_width) / target,
 					h = 1,
 					color = "#008800",
 					align_h = "left",
-				},
+				} or gui_nil,
 				gui.HBox{
 					w = self.bar_width,
 					align_h = "left",
 					padding = .2,
 					gui.Label{
-						label = math.floor((current * 100) / target) .. "% ",
+						label = math.floor((current * 100 * 100) / target) / 100 .. "% ",
 						align_h = "left",
 						expand = true,
 					},
@@ -39,7 +39,7 @@ local function generate_award(self, title, description, unlocked, icon, progress
 						align_h = "right",
 					}
 				}
-			} or gui_nil
+			} or gui.Label{ label = "Complete!" }
 		},
 	}
 end
