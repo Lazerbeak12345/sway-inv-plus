@@ -56,6 +56,10 @@ sway.register_page("sway_awards:awards", {
 				table.insert(awards_box, generate_award(self, def.title, def.description, award.unlocked, def.icon, award.progress))
 			end
 		end
-		return sway.make_form(player, context, gui.ScrollableVBox(awards_box))
+		return sway.widgets.form{
+			player = player,
+			context = context,
+			gui.ScrollableVBox(awards_box)
+		}
 	end
 })
