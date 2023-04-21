@@ -1,8 +1,6 @@
+local minetest, sway, armor = minetest, sway, armor
 local has_technic = minetest.get_modpath("technic") ~= nil
-local armor = armor
-local formspec_ast = formspec_ast
 local gui = sway.widgets
-local gui_nil = gui.Spacer{expand=false}
 local widgets = {}
 sway.mods.sway_3d_armor = { widgets = widgets }
 function widgets.List(fields)
@@ -42,10 +40,10 @@ function widgets.Stats(fields)
 		gui.Label{ label = "Heal: " .. armor.def[name].heal },
 		armor.config.fire_protect and gui.Label{
 			label = "Fire: " .. armor.def[name].fire
-		} or gui_nil,
+		} or gui.Nil{},
 		has_technic and gui.Label{
 			label = "Radiation: " .. armor.def[name].groups["radiation"]
-		} or gui_nil
+		} or gui.Nil{}
 	}
 end
 sway.register_page("sway_3d_armor:3d_armor", {

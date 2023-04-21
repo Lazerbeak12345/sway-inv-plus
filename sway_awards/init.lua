@@ -1,7 +1,5 @@
-local sway = sway
-local awards = awards
+local sway, awards = sway, awards
 local gui = sway.widgets
-local gui_nil = gui.Spacer{expand=false}
 sway.mods.sway_awards = { widgets = {} }
 local widgets = sway.mods.sway_awards.widgets
 function widgets.Award(fields)
@@ -39,7 +37,7 @@ function widgets.Award(fields)
 					h = 1,
 					color = "#008800",
 					align_h = "left",
-				} or gui_nil,
+				} or gui.Nil{},
 				gui.HBox{
 					w = bar_width,
 					align_h = "left",
@@ -87,6 +85,7 @@ sway.register_page("sway_awards:awards", {
 			player = player,
 			context = context,
 			gui.sway_awards.ScrollableAwards{
+				name = "sway_awards_scrollbox",
 				player = player,
 				bar_width = self.bar_width,
 				h = self.h
