@@ -12,7 +12,7 @@
                                      \/__/                                     
 ```
 
-<!-- Above generated via `echo "Sway Inv+" | figlet -f larry3d`. `larry3d` font is from the
-official figlet "contributed" collection. -->
+> Above generated via `echo "Sway Inv+" | figlet -f larry3d`. `larry3d` font is from the
+> official figlet "contributed" collection.
 
 Addons for the `sway` inventory mod to make sway into the _best_ inventory.
