@@ -1,8 +1,7 @@
 local sway, awards = sway, awards
 local gui = sway.widgets
 sway.mods.sway_awards = { widgets = {} }
-local widgets = sway.mods.sway_awards.widgets
-function widgets.Award(fields)
+function gui.sway_awards.Award(fields)
 	local bar_width = fields.bar_width
 	local award = fields.award
 
@@ -58,7 +57,7 @@ function widgets.Award(fields)
 		}
 	}
 end
-function widgets.ScrollableAwards(fields)
+function gui.sway_awards.ScrollableAwards(fields)
 	local player = fields.player
 	fields.player = nil
 	local bar_width = fields.bar_width
