@@ -2,13 +2,14 @@ local minetest, sway, armor = minetest, sway, armor
 local has_technic = minetest.get_modpath("technic") ~= nil
 local gui = sway.widgets
 local widgets = {}
-sway.mods.sway_3d_armor = { widgets = widgets }
+sway.mods.sway_3d_armor = { widgets = widgets, slot_w = 2, slot_h = 3 }
 function widgets.List(fields)
 	local name = fields.player_name
-	local w = fields.w
-	local h = fields.h
+	local w = fields.w or sway.mods.sway_3d_armor.slot_w
+	local h = fields.h or sway.mods.sway_3d_armor.slot_h
 	local location = "detached:" .. name .. "_armor"
 	return gui.VBox{
+		align_v = "center",
 		gui.List{
 			inventory_location = location,
 			list_name = "armor",
@@ -48,7 +49,7 @@ function widgets.Stats(fields)
 end
 sway.register_page("sway_3d_armor:3d_armor", {
 	title = "Armor",
-	slot_w = 2, slot_h = 3,
+	slot_w = nil, slot_h = nil, -- Use global defaults by default
 	get = function(self, player, context)
 		local name = player:get_player_name()
 		return gui.sway.Form{
@@ -69,3 +70,13 @@ sway.register_page("sway_3d_armor:3d_armor", {
 armor:register_on_update(function(player)
 	sway.set_player_inventory_formspec(player)
 end)
+local crafting_page_name = "sway:crafting"
+local old_filter = sway.pages[crafting_page_name].filter
+sway.override_page(crafting_page_name, {
+	filter = function (self, player, context, elm)
+		local name = player:get_player_name()
+		table.insert(elm, 1, gui.sway_3d_armor.List{ player_name = name })
+		table.insert(elm, 2, gui.sway_3d_armor.Preview{ player_name = name })
+		return old_filter(self, player, context, elm)
+	end
+})
