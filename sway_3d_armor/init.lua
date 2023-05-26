@@ -68,7 +68,9 @@ sway.register_page("sway_3d_armor:3d_armor", {
 	end
 })
 armor:register_on_update(function(player)
-	sway.set_player_inventory_formspec(player)
+	if sway.enabled then
+		sway.set_player_inventory_formspec(player)
+	end
 end)
 local crafting_page_name = "sway:crafting"
 local old_filter = sway.pages[crafting_page_name].filter
