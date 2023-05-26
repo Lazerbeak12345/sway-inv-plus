@@ -75,8 +75,10 @@ local old_filter = sway.pages[crafting_page_name].filter
 sway.override_page(crafting_page_name, {
 	filter = function (self, player, context, elm)
 		local name = player:get_player_name()
-		table.insert(elm, 1, gui.sway_3d_armor.List{ player_name = name })
-		table.insert(elm, 2, gui.sway_3d_armor.Preview{ player_name = name })
+		table.insert(elm, 1, gui.HBox{
+			gui.sway_3d_armor.List{ player_name = name },
+			gui.sway_3d_armor.Preview{ player_name = name }
+		})
 		return old_filter(self, player, context, elm)
 	end
 })
