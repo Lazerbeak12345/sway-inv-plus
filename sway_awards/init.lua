@@ -6,10 +6,10 @@ function gui.sway_awards.ProgressBar(fields)
 	local bar_height = fields.h or 1
 	local current = fields.current
 	local target = fields.target
-	local bg_color = fields.bg_color or "#333333"
+	local bgcolor = fields.bgcolor or "#333333"
 	local color = fields.color or "#008800"
 	return gui.Stack {
-		gui.Box{ w = bar_width, h = bar_height, color = bg_color, align_h = "left" },
+		gui.Box{ w = bar_width, h = bar_height, color = bgcolor, align_h = "left" },
 		current > 0 and gui.Box{
 			w = (current * bar_width) / target,
 			h = bar_height,
@@ -53,7 +53,7 @@ function gui.sway_awards.Award(fields)
 			or (not started) and gui.Label{ label = "Not started!" }
 			or gui.Label{ label = " ??? " }
 		}
-	}
+	}, current, target
 end
 function gui.sway_awards.ScrollableAwards(fields)
 	local player = fields.player
@@ -62,18 +62,26 @@ function gui.sway_awards.ScrollableAwards(fields)
 	fields.bar_width = nil
 	local name = player:get_player_name()
 	local award_list = awards.get_award_states(name)
+	local current_tot = 0
+	local target_tot = 0
 	for _, award in ipairs(award_list) do
 		local def = award.def
 		if def:can_unlock(player) and (award.unlocked or not def.secret) then
-			fields[#fields+1] = gui.sway_awards.Award{ bar_width = bar_width, award = award }
+			local current, target
+			fields[#fields+1], current, target = gui.sway_awards.Award{ bar_width = bar_width, award = award }
+			current_tot = current_tot + (current or 0)
+			target_tot = target_tot + (target or 0)
 		end
 	end
-	return gui.ScrollableVBox(fields)
+	return gui.VBox{
+		gui.ScrollableVBox(fields),
+		gui.sway_awards.ProgressBar{ w = bar_width, current = current_tot, target = target_tot, bgcolor = "#111111" }
+	}
 end
 sway.register_page("sway_awards:awards", {
 	title = "Awards",
 	bar_width = 6,
-	h = 8.9,
+	h = 7.9,
 	get = function(self, player, context)
 		return gui.sway.Form{
 			player = player,
