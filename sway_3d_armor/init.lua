@@ -1,23 +1,26 @@
 local minetest, sway, armor = minetest, sway, armor
 local has_technic = minetest.get_modpath"technic" ~= nil
+local has_shields = minetest.get_modpath"shields" ~= nil
 local gui = sway.widgets
 local widgets = {}
-sway.mods.sway_3d_armor = { widgets = widgets, slot_w = 2, slot_h = 3 }
+sway.mods.sway_3d_armor = { widgets = widgets, slot_w = 2, slot_h = 2, slot_remainder = 0 }
+if has_shields then
+	sway.mods.sway_3d_armor.slot_remainder = 1
+end
 function widgets.List(fields)
-	local name = fields.player_name
-	local w = fields.w or sway.mods.sway_3d_armor.slot_w
-	local h = fields.h or sway.mods.sway_3d_armor.slot_h
-	local location = "detached:" .. name .. "_armor"
-	return gui.VBox{
+	return gui.sway.List{
 		align_v = "center",
-		gui.List{ inventory_location = location, list_name = "armor", w = w, h = h },
-		gui.Listring{ inventory_location = location, list_name = "armor" },
-		gui.Listring{ inventory_location = "current_player", list_name = "main" }
+		inventory_location = "detached:" .. fields.player_name .. "_armor",
+		list_name = "armor",
+		w = fields.w or sway.mods.sway_3d_armor.slot_w,
+		h = fields.h or sway.mods.sway_3d_armor.slot_h,
+		remainder = fields.remainder or sway.mods.sway_3d_armor.slot_remainder,
+		remainder_v = true,
+		listring = { { inventory_location = "current_player", list_name = "main" } }
 	}
 end
 function widgets.Preview(fields)
-	local name = fields.player_name
-	return gui.Image{ w = 2, h = 4, texture_name = armor.textures[name].preview }
+	return gui.Image{ w = 2, h = 4, texture_name = armor.textures[fields.player_name].preview }
 end
 function widgets.Stats(fields)
 	local name = fields.player_name
@@ -31,7 +34,7 @@ function widgets.Stats(fields)
 end
 sway.register_page("sway_3d_armor:3d_armor", {
 	title = "Armor",
-	slot_w = nil, slot_h = nil, -- Use global defaults by default
+	slot_w = nil, slot_h = nil, slot_remainder = nil, -- Use global defaults by default
 	get = function(self, player, context)
 		local name = player:get_player_name()
 		return gui.sway.Form{
@@ -39,7 +42,12 @@ sway.register_page("sway_3d_armor:3d_armor", {
 			context = context,
 			show_inv = true,
 			gui.HBox{
-				gui.sway_3d_armor.List{ player_name = name, w = self.slot_w, h = self.slot_h },
+				gui.sway_3d_armor.List{
+					player_name = name,
+					w = self.slot_w,
+					h = self.slot_h,
+					remainder = self.slot_remainder
+				},
 				gui.sway_3d_armor.Preview{ player_name = name },
 				gui.sway_3d_armor.Stats{ player_name = name }
 			}
