@@ -25,31 +25,19 @@ function gui.sway_awards.Award(fields)
 			gui.Label { label = title },
 			gui.Label { label = description },
 			progress and gui.Stack {
-				gui.Box{
-					w = bar_width,
-					h = 1,
-					color = "#333333",
-					align_h = "left",
-				},
+				gui.Box{ w = bar_width, h = 1, color = "#333333", align_h = "left" },
 				current > 0 and gui.Box{
 					w = (current * bar_width) / target,
 					h = 1,
 					color = "#008800",
-					align_h = "left",
+					align_h = "left"
 				} or gui.Nil{},
 				gui.HBox{
 					w = bar_width,
 					align_h = "left",
 					padding = .2,
-					gui.Label{
-						label = math.floor((current * 100 * 100) / target) / 100 .. "% ",
-						align_h = "left",
-						expand = true,
-					},
-					gui.Label{
-						label = current .. " of " .. target,
-						align_h = "right",
-					}
+					gui.Label{ label = math.floor((current * 100 * 100) / target) / 100 .. "% ", align_h = "left", expand = true },
+					gui.Label{ label = current .. " of " .. target, align_h = "right" }
 				}
 			} or unlocked and gui.Label{ label = "Complete!" }
 			or (not started) and gui.Label{ label = "Not started!" }
@@ -67,10 +55,7 @@ function gui.sway_awards.ScrollableAwards(fields)
 	for _, award in ipairs(award_list) do
 		local def = award.def
 		if def:can_unlock(player) and (award.unlocked or not def.secret) then
-			fields[#fields+1] = gui.sway_awards.Award{
-				bar_width = bar_width,
-				award = award
-			}
+			fields[#fields+1] = gui.sway_awards.Award{ bar_width = bar_width, award = award }
 		end
 	end
 	return gui.ScrollableVBox(fields)
