@@ -20,7 +20,7 @@ function widgets.List(fields)
 	}
 end
 function widgets.Preview(fields)
-	return gui.Image{ w = 2, h = 4, texture_name = armor.textures[fields.player_name].preview }
+	return gui.sway_player_model.Model{ player = minetest.get_player_by_name(fields.player_name) }
 end
 function widgets.Stats(fields)
 	local name = fields.player_name
