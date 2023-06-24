@@ -1,7 +1,8 @@
-local sway, awards = sway, awards
-local gui = sway.widgets
-sway.mods.sway_awards = { widgets = {} }
-function gui.sway_awards.ProgressBar(fields)
+local sway, awards, flow = sway, awards, flow
+local gui = flow.widgets
+local sway_awards = { }
+_G.sway_awards = sway_awards
+function sway_awards.ProgressBar(fields)
 	local bar_width = fields.w
 	local bar_height = fields.h or 1
 	local current = fields.current
@@ -25,7 +26,7 @@ function gui.sway_awards.ProgressBar(fields)
 		}
 	}
 end
-function gui.sway_awards.Award(fields)
+function sway_awards.Award(fields)
 	local bar_width = fields.bar_width
 	local award = fields.award
 
@@ -48,14 +49,14 @@ function gui.sway_awards.Award(fields)
 		gui.VBox{
 			gui.Label { label = title },
 			gui.Label { label = description },
-			progress and gui.sway_awards.ProgressBar{ w = bar_width, current = current, target = target }
+			progress and sway_awards.ProgressBar{ w = bar_width, current = current, target = target }
 			or unlocked and gui.Label{ label = "Complete!" }
 			or (not started) and gui.Label{ label = "Not started!" }
 			or gui.Label{ label = " ??? " }
 		}
 	}, current, target
 end
-function gui.sway_awards.ScrollableAwards(fields)
+function sway_awards.ScrollableAwards(fields)
 	local player = fields.player
 	fields.player = nil
 	local bar_width = fields.bar_width
@@ -68,14 +69,14 @@ function gui.sway_awards.ScrollableAwards(fields)
 		local def = award.def
 		if def:can_unlock(player) and (award.unlocked or not def.secret) then
 			local current, target
-			fields[#fields+1], current, target = gui.sway_awards.Award{ bar_width = bar_width, award = award }
+			fields[#fields+1], current, target = sway_awards.Award{ bar_width = bar_width, award = award }
 			current_tot = current_tot + (current or 0)
 			target_tot = target_tot + (target or 0)
 		end
 	end
 	return gui.VBox{
 		gui.ScrollableVBox(fields),
-		gui.sway_awards.ProgressBar{ w = bar_width, current = current_tot, target = target_tot, bgcolor = "#111111" }
+		sway_awards.ProgressBar{ w = bar_width, current = current_tot, target = target_tot, bgcolor = "#111111" }
 	}
 end
 sway.register_page("sway_awards:awards", {
@@ -83,10 +84,10 @@ sway.register_page("sway_awards:awards", {
 	bar_width = 6,
 	h = 7.9,
 	get = function(self, player, context)
-		return gui.sway.Form{
+		return sway.Form{
 			player = player,
 			context = context,
-			gui.sway_awards.ScrollableAwards{
+			sway_awards.ScrollableAwards{
 				name = "sway_awards_scrollbox",
 				player = player,
 				bar_width = self.bar_width,

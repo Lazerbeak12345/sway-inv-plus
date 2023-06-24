@@ -1,11 +1,12 @@
 -- Largely based off of code in the `src/gui.lua` file of the `i3` mod (by kilbith), under MIT.
 -- (has more features and extensibility though)
-local sway, armor, skins = sway, armor, skins
-local gui = sway.widgets
+local armor, skins, minetest, flow = armor, skins, minetest, flow
+local gui = flow.widgets
 local has_armor = minetest.get_modpath"3d_armor" ~= nil
 local has_skins = minetest.get_modpath"skinsdb" ~= nil
-sway.mods.sway_player_model = { widgets = {} }
-function gui.sway_player_model.Model(fields)
+local sway_player_model = {}
+_G.sway_player_model = sway_player_model
+function sway_player_model.Model(fields)
 	local player = fields.player
 	local props = player:get_properties()
 	--local armor_skin = has_armor or has_skins
@@ -34,9 +35,9 @@ function gui.sway_player_model.Model(fields)
 			animation_speed = animation_speed
 		},
 		gui.Spacer{ padding = -0.42, expand = false }
-	} or gui.sway_player_model.Preview{ player = player }
+	} or sway_player_model.Preview{ player = player }
 end
-function gui.sway_player_model.Preview(fields)
+function sway_player_model.Preview(fields)
 	local player = fields.player
 	local props
 	if not has_skins and not has_armor then
