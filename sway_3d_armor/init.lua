@@ -8,7 +8,7 @@ if has_shields then
 	sway_3d_armor.slot_remainder = 1
 end
 function sway_3d_armor.List(fields)
-	return sway.List{
+	return flow_extras.List{
 		align_v = "center",
 		inventory_location = "detached:" .. fields.player_name .. "_armor",
 		list_name = "armor",
@@ -16,6 +16,7 @@ function sway_3d_armor.List(fields)
 		h = fields.h or sway_3d_armor.slot_h,
 		remainder = fields.remainder or sway_3d_armor.slot_remainder,
 		remainder_v = true,
+		remainder_align = "start",
 		listring = { { inventory_location = "current_player", list_name = "main" } }
 	}
 end
