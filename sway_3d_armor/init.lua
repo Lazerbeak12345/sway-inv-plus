@@ -1,4 +1,4 @@
-local minetest, sway, armor, flow, sway_player_model = minetest, sway, armor, flow, sway_player_model
+local minetest, sway, armor, flow, sway_player_model, flow_extras = minetest, sway, armor, flow, sway_player_model, flow_extras
 local has_technic = minetest.get_modpath"technic" ~= nil
 local has_shields = minetest.get_modpath"shields" ~= nil
 local gui = flow.widgets
