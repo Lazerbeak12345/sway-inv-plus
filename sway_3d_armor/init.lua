@@ -61,14 +61,15 @@ armor:register_on_update(function(player)
 	end
 end)
 local crafting_page_name = "sway:crafting"
-local old_filter = sway.pages[crafting_page_name].filter
+local old_func = sway.pages[crafting_page_name].CraftingRow
 sway.override_page(crafting_page_name, {
-	filter = function (self, player, context, elm)
+	CraftingRow = function(self, player, context, ...)
+		local ret = old_func(self, player, context, ...)
 		local name = player:get_player_name()
-		table.insert(elm, 1, gui.HBox{
+		table.insert(ret, 1, gui.HBox{
 			sway_3d_armor.List{ player_name = name },
 			sway_3d_armor.Preview{ player_name = name }
 		})
-		return old_filter(self, player, context, elm)
+		return ret
 	end
 })
