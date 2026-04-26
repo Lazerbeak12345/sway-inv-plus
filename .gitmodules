@@ -1,0 +1,3 @@
+[submodule "player_settings"]
+	path = player_settings
+	url = https://github.com/Lazerbeak12345/player_settings
