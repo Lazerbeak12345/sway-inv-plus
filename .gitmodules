@@ -1,6 +1,6 @@
 [submodule "player_settings"]
 	path = player_settings
-	url = https://github.com/Lazerbeak12345/player_settings
+	url = https://github.com/C-C-Minetest-Server/player_settings
 [submodule "fsfcraftguide"]
 	path = fsfcraftguide
 	url = https://github.com/Lazerbeak12345/fsfcraftguide.git
