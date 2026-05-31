@@ -3,4 +3,15 @@
 	url = https://github.com/C-C-Minetest-Server/player_settings
 [submodule "fsfcraftguide"]
 	path = fsfcraftguide
-	url = https://github.com/Lazerbeak12345/fsfcraftguide.git
+
+	# Old GitHub URL
+	#url = https://github.com/Lazerbeak12345/fsfcraftguide.git
+	
+	# Radicle
+	# TODO: I was going to set this as the submodule URL, but I realized it'd be really
+	#       hard to work with for the majority of my users.
+	#
+	#url = rad://z21MxmXaKJhGMGnNKsZ6fzzi4ZsZi
+	
+	# Iris Radicle URL
+	url = https://iris.radicle.network/z21MxmXaKJhGMGnNKsZ6fzzi4ZsZi.git
