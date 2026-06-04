@@ -14,4 +14,7 @@
 	#url = rad://z21MxmXaKJhGMGnNKsZ6fzzi4ZsZi
 	
 	# Iris Radicle URL
-	url = https://iris.radicle.network/z21MxmXaKJhGMGnNKsZ6fzzi4ZsZi.git
+	#
+	# I plan on updating the domain name to a known synched endpoint _every_ time
+	# I update the commit.
+	url = https://seed.petal.cafe/z21MxmXaKJhGMGnNKsZ6fzzi4ZsZi.git
